@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {Avatar, Badge, Button, Card, Gradient, Screen} from '../../components';
@@ -11,6 +11,7 @@ export function EventDetailScreen() {
   const navigation = useNavigation<AppNav>();
   const {params} = useRoute<RouteProp<AppStackParamList, 'EventDetail'>>();
   const event = getEvent(params.eventId);
+  const [joined, setJoined] = useState(false);
 
   if (!event) {
     return (
@@ -26,8 +27,16 @@ export function EventDetailScreen() {
         amount: event.priceRM ?? 0,
         eventName: event.name,
       });
+    } else {
+      setJoined(true);
     }
   };
+
+  const joinLabel = joined
+    ? "You're going 🎉"
+    : event.payment === 'paid'
+    ? `Join · ${formatPrice(event)}`
+    : 'Join event';
 
   return (
     <Screen scroll padded={false}>
@@ -83,8 +92,10 @@ export function EventDetailScreen() {
         </View>
 
         <Button
-          label={event.payment === 'paid' ? `Join · ${formatPrice(event)}` : 'Join event'}
+          label={joinLabel}
           onPress={join}
+          variant={joined ? 'secondary' : 'primary'}
+          disabled={joined}
         />
         <Button
           label="Enquire organizer"

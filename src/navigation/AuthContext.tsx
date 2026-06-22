@@ -1,15 +1,18 @@
 import React, {createContext, useContext, useMemo, useState} from 'react';
 import {mockUser} from '../data/mockUser';
+import {findAccount} from '../data/demoAccounts';
 import type {User} from '../domain/types';
 
 interface AuthState {
   isAuthed: boolean;
   user: User;
-  signIn: () => void;
+  /** Resolves a hardcoded demo account by email; falls back to a Normal user. */
+  signIn: (email?: string) => void;
   signOut: () => void;
   /** Pay-to-verify: flips the badge and lifts the pax cap. */
   verify: () => void;
   spendCredits: (amount: number) => void;
+  topUp: (amount: number) => void;
 }
 
 const AuthCtx = createContext<AuthState | undefined>(undefined);
@@ -22,12 +25,16 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     () => ({
       isAuthed,
       user,
-      signIn: () => setAuthed(true),
+      signIn: email => {
+        setUser(email ? findAccount(email)?.user ?? mockUser : mockUser);
+        setAuthed(true);
+      },
       signOut: () => setAuthed(false),
       verify: () =>
         setUser(u => ({...u, verified: true, role: 'verified'})),
       spendCredits: amount =>
         setUser(u => ({...u, credits: Math.max(0, u.credits - amount)})),
+      topUp: amount => setUser(u => ({...u, credits: u.credits + amount})),
     }),
     [isAuthed, user],
   );

@@ -1,12 +1,13 @@
 import React from 'react';
 import {Image, StyleSheet, Text} from 'react-native';
-import {useRoute, RouteProp} from '@react-navigation/native';
+import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {Badge, Button, Card, Screen} from '../../components';
 import {getVenue} from '../../data/mockVenues';
-import type {AppStackParamList} from '../../navigation/types';
+import type {AppNav, AppStackParamList} from '../../navigation/types';
 import {colors, radius, spacing, typography} from '../../theme';
 
 export function VenueDetailScreen() {
+  const navigation = useNavigation<AppNav>();
   const {params} = useRoute<RouteProp<AppStackParamList, 'VenueDetail'>>();
   const venue = getVenue(params.venueId);
 
@@ -28,7 +29,10 @@ export function VenueDetailScreen() {
         <Text style={styles.row}>📍 {venue.location}</Text>
         <Text style={styles.offer}>🎁 {venue.offer}</Text>
       </Card>
-      <Button label="Use this venue" />
+      <Button
+        label="Use this venue"
+        onPress={() => navigation.navigate('Main', {screen: 'Create'} as never)}
+      />
     </Screen>
   );
 }

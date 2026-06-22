@@ -39,7 +39,7 @@ export function LoginScreen() {
         />
         <Button
           label="Sign in"
-          onPress={signIn}
+          onPress={() => signIn(email)}
           disabled={!email.trim() || !password}
         />
         <Button
@@ -47,6 +47,9 @@ export function LoginScreen() {
           variant="ghost"
           onPress={() => navigation.navigate('Register')}
         />
+        <Text style={styles.demo}>
+          Demo: normal / verified / merchant / admin @eventplanet.app · demo1234
+        </Text>
       </View>
     </Screen>
   );
@@ -66,4 +69,10 @@ const styles = StyleSheet.create({
   tagline: {...typography.body, color: 'rgba(255,255,255,0.78)'},
   form: {padding: spacing.lg, gap: spacing.md, marginTop: spacing.sm},
   welcome: {...typography.h2, color: colors.text, marginBottom: spacing.xs},
+  demo: {
+    ...typography.caption,
+    color: colors.faint,
+    textAlign: 'center',
+    marginTop: spacing.sm,
+  },
 });

@@ -7,7 +7,7 @@ import {formatCredits} from '../../utils/format';
 import {colors, radius, shadows, spacing, typography} from '../../theme';
 
 export function CreditsScreen() {
-  const {user} = useAuth();
+  const {user, topUp} = useAuth();
   const affordable = canAffordEvent(user.credits);
 
   return (
@@ -27,8 +27,16 @@ export function CreditsScreen() {
 
       <Text style={styles.packTitle}>Top up</Text>
       <View style={styles.packs}>
-        <Button label="Buy 500 credits · RM 5" variant="secondary" />
-        <Button label="Buy 2,000 credits · RM 18" variant="secondary" />
+        <Button
+          label="Buy 500 credits · RM 5"
+          variant="secondary"
+          onPress={() => topUp(500)}
+        />
+        <Button
+          label="Buy 2,000 credits · RM 18"
+          variant="secondary"
+          onPress={() => topUp(2000)}
+        />
       </View>
     </Screen>
   );

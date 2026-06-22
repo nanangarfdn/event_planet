@@ -7,11 +7,12 @@ import {useAuth} from '../../navigation/AuthContext';
 import type {AppNav} from '../../navigation/types';
 import {colors, radius, shadows, spacing, typography} from '../../theme';
 
-const STATS = (credits: number) => [
-  {icon: '💎', value: credits.toLocaleString('en-US'), label: 'Balance'},
-  {icon: '🎟', value: '3', label: 'Joined'},
-  {icon: '✨', value: '2', label: 'Hosted'},
-];
+const STATS = (credits: number) =>
+  [
+    {icon: '💎', value: credits.toLocaleString('en-US'), label: 'Balance', to: 'Credits'},
+    {icon: '🎟', value: '3', label: 'Joined', to: 'Explore'},
+    {icon: '✨', value: '2', label: 'Hosted', to: 'Create'},
+  ] as const;
 
 const CATEGORIES = [
   {icon: '🏃', label: 'Run'},
@@ -39,11 +40,14 @@ export function HomeScreen() {
 
         <View style={styles.statRow}>
           {STATS(user.credits).map(s => (
-            <View key={s.label} style={styles.statTile}>
+            <Pressable
+              key={s.label}
+              onPress={() => navigation.navigate('Main', {screen: s.to} as never)}
+              style={({pressed}) => [styles.statTile, pressed && styles.pressed]}>
               <Text style={styles.statIcon}>{s.icon}</Text>
               <Text style={styles.statValue}>{s.value}</Text>
               <Text style={styles.statLabel}>{s.label}</Text>
-            </View>
+            </Pressable>
           ))}
         </View>
       </Gradient>
@@ -54,10 +58,13 @@ export function HomeScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.cats}>
           {CATEGORIES.map(c => (
-            <View key={c.label} style={styles.catPill}>
+            <Pressable
+              key={c.label}
+              onPress={() => navigation.navigate('Main', {screen: 'Explore'} as never)}
+              style={({pressed}) => [styles.catPill, pressed && styles.pressed]}>
               <Text style={styles.catIcon}>{c.icon}</Text>
               <Text style={styles.catLabel}>{c.label}</Text>
-            </View>
+            </Pressable>
           ))}
         </ScrollView>
 
@@ -110,6 +117,7 @@ const styles = StyleSheet.create({
   flex: {flex: 1},
   hi: {...typography.h1, color: colors.onPrimary},
   sub: {...typography.body, color: 'rgba(255,255,255,0.82)', marginTop: 2},
+  pressed: {opacity: 0.7},
   statRow: {flexDirection: 'row', gap: spacing.sm},
   statTile: {
     flex: 1,
