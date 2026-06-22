@@ -1,0 +1,12 @@
+# Filter events on Explore and open a detail.
+appId: com.eventplanet
+tags:
+  - smoke
+---
+- runFlow: common/login.yaml
+- tapOn: "Explore"
+- assertVisible: "Find your next event"
+- tapOn: "Paid"
+- assertVisible: "Indie Founders Mixer"
+- tapOn: "Indie Founders Mixer"
+- assertVisible: "Enquire organizer"

@@ -1,0 +1,10 @@
+# Buying credits tops up the balance.
+appId: com.eventplanet
+tags:
+  - smoke
+---
+- runFlow: common/login.yaml
+- tapOn: "Credits"
+- assertVisible: "1,000 credits"
+- tapOn: "Buy 500 credits · RM 5"
+- assertVisible: "1,500 credits"

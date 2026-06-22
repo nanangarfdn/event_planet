@@ -1,0 +1,20 @@
+# Reusable login. Override EMAIL via runFlow env to pick a role.
+appId: com.eventplanet
+env:
+  EMAIL: normal@eventplanet.app
+---
+# NOTE: app is cold-started via adb before each run (Maestro launchApp is
+# unavailable on the local headless driver), so this flow assumes the Login screen.
+- runFlow:
+    when:
+      visible: "Wait"
+    commands:
+      - tapOn: "Wait"
+- tapOn: "you@example.com"
+- inputText: "${EMAIL}"
+- tapOn:
+    point: "50%,61%"
+- inputText: "demo1234"
+- hideKeyboard
+- tapOn: "Sign in"
+- assertVisible: "Featured"

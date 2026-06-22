@@ -1,0 +1,14 @@
+# Enquiry chat masks foul words.
+appId: com.eventplanet
+tags:
+  - smoke
+---
+- runFlow: common/login.yaml
+- tapOn: "Sunset Rooftop Run"
+- tapOn: "Enquire organizer"
+- assertVisible: "Hi! How can I help with this event?"
+- tapOn: "Type a message"
+- inputText: "is this a scam"
+- hideKeyboard
+- tapOn: "Send"
+- assertVisible: "is this a ****"

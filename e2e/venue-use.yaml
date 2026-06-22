@@ -1,0 +1,12 @@
+# Venue -> "Use this venue" opens the create wizard.
+appId: com.eventplanet
+tags:
+  - smoke
+---
+- runFlow: common/login.yaml
+- tapOn: "Venues & deals"
+- assertVisible: "Partner spots with offers"
+- tapOn: "Brew Lab Coffee"
+- assertVisible: "Use this venue"
+- tapOn: "Use this venue"
+- assertVisible: "Event details"

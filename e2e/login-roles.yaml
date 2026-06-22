@@ -1,0 +1,22 @@
+# Admin (verified) role: badge shows on Profile. Login inlined because Maestro's
+# subflow env-override is unreliable on this driver.
+appId: com.eventplanet
+tags:
+  - smoke
+---
+- runFlow:
+    when:
+      visible: "Wait"
+    commands:
+      - tapOn: "Wait"
+- tapOn: "you@example.com"
+- inputText: "admin@eventplanet.app"
+- tapOn:
+    point: "50%,61%"
+- inputText: "demo1234"
+- hideKeyboard
+- tapOn: "Sign in"
+- assertVisible: "Featured"
+- assertVisible: "Hi, Adam.*"
+- tapOn: "Profile"
+- assertVisible: "Verified ✓"

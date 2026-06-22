@@ -1,0 +1,26 @@
+# Create a free event through the wizard and publish.
+appId: com.eventplanet
+tags:
+  - smoke
+---
+- runFlow: common/login.yaml
+- tapOn: "Create"
+- assertVisible: "Event details"
+- tapOn: "Event name"
+- inputText: "Launch Party"
+- tapOn: "Location"
+- inputText: "KL Eco City"
+- hideKeyboard
+- tapOn: "Next"
+- assertVisible: "Who can join?"
+- tapOn: "Next"
+- assertVisible: "How many slots?"
+- tapOn: "Number of slots"
+- inputText: "30"
+- hideKeyboard
+- tapOn: "Next"
+- assertVisible: "Pricing"
+- tapOn: "Next"
+- assertVisible: "Review & publish"
+- tapOn: "Publish · 10 credits"
+- assertVisible: "🎉 Event published!"
