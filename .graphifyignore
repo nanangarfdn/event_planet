@@ -1,0 +1,9 @@
+node_modules/
+ios/Pods/
+android/.gradle/
+android/build/
+build/
+.dart_tool/
+*.g.dart
+*.freezed.dart
+e2e/

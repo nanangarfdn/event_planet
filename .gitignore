@@ -16,3 +16,4 @@ android/local.properties
 !debug.keystore
 ios/build/
 ios/Pods/
+graphify-out/
