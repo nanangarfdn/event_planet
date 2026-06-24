@@ -18,7 +18,9 @@ export function EnquiryChatScreen() {
 
   const send = () => {
     const clean = filterFoulWords(draft.trim());
-    if (!clean) return;
+    if (!clean) {
+      return;
+    }
     setMessages(prev => [
       ...prev,
       {id: `m${prev.length}`, from: 'me', text: clean},

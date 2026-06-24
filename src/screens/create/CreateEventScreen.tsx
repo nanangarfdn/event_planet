@@ -27,9 +27,13 @@ const TITLES: Record<StepKey, string> = {
 // Docs step only when over the threshold; Fiuu step only when the event is paid.
 function buildSteps(pax: number, payment: PaymentType): StepKey[] {
   const steps: StepKey[] = ['details', 'type', 'pax'];
-  if (needsDocs(pax)) steps.push('docs');
+  if (needsDocs(pax)) {
+    steps.push('docs');
+  }
   steps.push('payment');
-  if (payment === 'paid') steps.push('fiuu');
+  if (payment === 'paid') {
+    steps.push('fiuu');
+  }
   steps.push('review');
   return steps;
 }
